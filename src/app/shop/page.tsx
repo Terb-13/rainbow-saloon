@@ -21,40 +21,76 @@ export default function ShopPage() {
 
       <div className="mt-12 grid gap-8 lg:grid-cols-2">
         <article className="overflow-hidden rounded-3xl bg-wood">
-          <div className="relative aspect-square">
+          <div className="relative aspect-[4/3]">
             <Image
-              src="/images/sauce-pouch.jpg"
-              alt="Stand-up flex pouch with spout of Rainbow Saloon house sauce"
+              src="/images/sauce-pour.jpg"
+              alt="House sauce pouring from a flex pouch spout onto wings"
               fill
               className="object-cover"
             />
             <span className="absolute left-4 top-4 rounded-full bg-amber px-3 py-1 text-xs font-bold uppercase tracking-wider text-char">
-              Recommended
+              Recommended · Best for wings
             </span>
+            <div className="absolute bottom-4 left-4 right-4 max-w-[14rem] rounded-lg bg-[#f3ead6] p-3 text-char shadow-lg">
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em]">
+                Rainbow Saloon
+              </p>
+              <p className="font-display text-xl leading-tight">House Sauce</p>
+              <p className="mt-1 text-[11px] font-semibold">
+                BBQ-tomatoey sweet-heat · Extra saucy · Roy, UT
+              </p>
+            </div>
           </div>
           <div className="p-6">
-            <h2 className="font-display text-3xl">House sauce · flex pouch</h2>
-            <p className="mt-2 text-paper/75">
-              Stand-up pouch with a spout. Pours like a bottle, packs like a
-              camping flask. Best way to take the extra-saucy house sauce home.
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber">
+              Rainbow Saloon · Roy, UT
             </p>
+            <h2 className="font-display text-3xl">House sauce · flex pouch</h2>
+            <p className="mt-1 text-sm font-semibold text-cream">
+              BBQ-tomatoey sweet-heat · Extra saucy
+            </p>
+            <p className="mt-2 text-paper/75">
+              Stand-up pouch with a spout. Pours over wings without a ladle.
+              Cooler-friendly. Priced at the bar — call to hold one.
+            </p>
+            <a href="#pickup" className="btn btn-primary mt-5">
+              Pickup pouch
+            </a>
           </div>
         </article>
         <article className="overflow-hidden rounded-3xl bg-wood">
-          <div className="relative aspect-square">
+          <div className="relative aspect-[4/3]">
             <Image
               src="/images/sauce-bottle.jpg"
               alt="Glass bottle of Rainbow Saloon house sauce"
               fill
               className="object-cover"
             />
+            <div className="absolute bottom-4 left-4 right-4 max-w-[14rem] rounded-lg bg-[#f3ead6] p-3 text-char shadow-lg">
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em]">
+                Rainbow Saloon
+              </p>
+              <p className="font-display text-xl leading-tight">House Sauce</p>
+              <p className="mt-1 text-[11px] font-semibold">
+                Bottle · Extra saucy · Roy, UT
+              </p>
+            </div>
           </div>
           <div className="p-6">
-            <h2 className="font-display text-3xl">House sauce · bottle</h2>
-            <p className="mt-2 text-paper/75">
-              For the fridge door. Same BBQ-tomatoey sweet-heat that hits the
-              wings.
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber">
+              Rainbow Saloon · Roy, UT
             </p>
+            <h2 className="font-display text-3xl">House sauce · bottle</h2>
+            <p className="mt-1 text-sm font-semibold text-cream">
+              BBQ-tomatoey sweet-heat · Extra saucy
+            </p>
+            <p className="mt-2 text-paper/75">
+              For the fridge door. Same sauce that hits the wings. Priced at the
+              bar.
+            </p>
+            <a href="#pickup" className="btn btn-ghost mt-5">
+              Pickup bottle
+            </a>
           </div>
         </article>
       </div>
@@ -80,7 +116,7 @@ export default function ShopPage() {
         </div>
       </div>
 
-      <div className="mt-12 grid gap-10 lg:grid-cols-2">
+      <div id="pickup" className="mt-12 grid scroll-mt-32 gap-10 lg:grid-cols-2">
         <PickupForm />
         <div>
           <p className="kicker">Why pouches</p>

@@ -34,8 +34,9 @@ export default function FundraiserPage() {
             20th Annual Shriners Children’s Hospital Fundraiser
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-paper/90">
-            {site.impact} already given. {fundraiser.ticketCap} tickets.{" "}
-            {fundraiser.priceLabel} each. All proceeds to Shriners.
+            {fundraiser.priceLabel} covers two people: 2 entries, 2 dinners, 2
+            bands, and 100+ prizes. {fundraiser.ticketCap} tickets only. You do
+            not need to be present to win. All proceeds to Shriners.
           </p>
           <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <Countdown />

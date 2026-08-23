@@ -5,6 +5,7 @@ Production website for **Rainbow Saloon**, a family-owned hometown bar in Roy, U
 - **Live intent:** ticket sales for the 20th Annual Shriners Children’s Hospital Fundraiser (Sat Aug 29), extra-saucy house-sauce wings, sauce pouches/bottles, wing pickup.
 - **Stack:** Next.js App Router 16, React 19, Tailwind CSS 4, TypeScript.
 - **Repo:** [Terb-13/rainbow-saloon](https://github.com/Terb-13/rainbow-saloon)
+- **Production:** https://rainbow-saloon.vercel.app
 - **Vercel:** project `rainbow-saloon` on team `terb-13s-projects`
 
 ## Local

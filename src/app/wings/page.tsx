@@ -18,24 +18,39 @@ export const metadata: Metadata = {
 export default function WingsPage() {
   return (
     <>
-      <section className="relative isolate min-h-[60svh] overflow-hidden">
-        <Image
-          src="/images/wings-hero.jpg"
-          alt="Glossy extra-saucy hot wings"
-          fill
-          priority
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-char via-char/50 to-char/30" />
-        <div className="relative mx-auto flex min-h-[60svh] max-w-6xl flex-col justify-end px-4 pb-12">
-          <p className="kicker">Hot wings · Roy, UT</p>
-          <h1 className="display mt-3 max-w-3xl text-5xl sm:text-6xl">
-            The wings people drive for.
-          </h1>
+      <section className="overflow-hidden bg-char">
+        <div className="grid lg:min-h-[72svh] lg:grid-cols-2">
+          <div className="relative order-1 min-h-[46svh] lg:min-h-full">
+            <Image
+              src="/images/wings-hero.jpg"
+              alt="Glossy extra-saucy hot wings"
+              fill
+              priority
+              className="object-cover object-center"
+            />
+            <div className="absolute inset-x-0 bottom-0 p-4 lg:hidden">
+              <a href={site.phoneHref} className="btn btn-primary w-full">
+                Call for to-go wings
+              </a>
+            </div>
+          </div>
+          <div className="order-2 flex flex-col justify-center px-4 py-10 sm:px-10">
+            <p className="kicker">Hot wings · Roy, UT</p>
+            <h1 className="display mt-3 max-w-xl text-4xl sm:text-6xl">
+              The wings people drive for.
+            </h1>
+            <p className="mt-4 max-w-md text-lg text-paper/85">
+              Extra saucy on purpose. BBQ-tomatoey sweet-heat. Call for to-go —
+              we toss them when you’re close.
+            </p>
+            <a href={site.phoneHref} className="btn btn-primary mt-6 w-fit">
+              Call for to-go wings
+            </a>
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 lg:grid-cols-2">
+      <section className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 pb-28 lg:grid-cols-2 lg:py-20">
         <div>
           <p className="kicker">House-made</p>
           <h2 className="display mt-3 text-4xl">BBQ. Tomato. Sweet heat.</h2>

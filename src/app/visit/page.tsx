@@ -21,9 +21,16 @@ export default function VisitPage() {
             {site.phoneDisplay}
           </a>
           <p className="mt-6 text-paper/80">
-            {site.address.street}
-            <br />
-            {site.address.city}, {site.address.state} {site.address.zip}
+            <a
+              href={site.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-amber"
+            >
+              {site.address.street}
+              <br />
+              {site.address.city}, {site.address.state} {site.address.zip}
+            </a>
           </p>
           <p className="mt-4 text-sm text-muted">
             Easy off SR-126 / 1900 W. Patio when it’s warm. Full bar — beer,

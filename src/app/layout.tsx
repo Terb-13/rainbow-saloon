@@ -56,7 +56,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${fraunces.variable} ${barlow.variable}`}>
-      <body className="min-h-dvh bg-char pb-24 text-cream antialiased md:pb-0">
+      <body className="min-h-dvh bg-char pb-28 text-cream antialiased md:pb-0">
         <JsonLd />
         <FundraiserBanner />
         <SiteHeader />

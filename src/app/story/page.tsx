@@ -20,7 +20,7 @@ export default function StoryPage() {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-char/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-char via-char/50 to-char/20" />
         <div className="relative mx-auto flex min-h-[50svh] max-w-3xl flex-col justify-end px-4 pb-12">
           <p className="kicker">Our story</p>
           <h1 className="display mt-3 text-5xl">A family, then a bar.</h1>
