@@ -1,35 +1,68 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Barlow, Fraunces } from "next/font/google";
+import { FundraiserBanner } from "@/components/FundraiserBanner";
+import { JsonLd } from "@/components/JsonLd";
+import { MobileDock } from "@/components/MobileDock";
+import { SiteFooter } from "@/components/SiteFooter";
+import { SiteHeader } from "@/components/SiteHeader";
+import { site } from "@/lib/site";
 import "./globals.css";
 
-const inter = Inter({
+const fraunces = Fraunces({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-fraunces",
+  display: "swap",
+});
+
+const barlow = Barlow({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-barlow",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Rainbow Saloon | Roy, UT – Famous Hot Wings & Hometown Bar",
+  metadataBase: new URL("https://rainbow-saloon.vercel.app"),
+  title: {
+    default: "Rainbow Saloon | Hot Wings Roy UT · Shriners Fundraiser",
+    template: "%s · Rainbow Saloon",
+  },
   description:
-    "Rainbow Saloon in Roy, Utah – home of the extra-saucy hot wings, legendary steak nights, and the 20th Annual Shriners Children's Hospital Fundraiser. Family-owned since forever. Saving lives, one jar at a time.",
+    "Family-owned hometown bar in Roy, Utah. Famous extra-saucy hot wings, Thursday & Saturday steak night, and the 20th Annual Shriners Children’s Hospital Fundraiser — Saturday Aug 29.",
   keywords: [
-    "Rainbow Saloon",
-    "Roy UT bar",
-    "hot wings Roy Utah",
+    "hot wings Roy UT",
     "steak night Roy",
-    "Shriners fundraiser",
-    "best wings Utah",
+    "Shriners fundraiser Roy",
+    "Rainbow Saloon",
+    "best wings Roy Utah",
+    "hometown bar Roy UT",
+    "house sauce wings",
   ],
+  openGraph: {
+    title: "Rainbow Saloon — Roy, Utah",
+    description: `${site.slogan} Extra-saucy hot wings. 20th Annual Shriners fundraiser this Saturday, Aug 29.`,
+    images: ["/images/wings-hero.jpg"],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/images/wings-hero.jpg"],
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} h-full`}>
-      <body className="min-h-full flex flex-col bg-stone-950 text-stone-100 antialiased">
-        {children}
+    <html lang="en" className={`${fraunces.variable} ${barlow.variable}`}>
+      <body className="min-h-dvh bg-char pb-24 text-cream antialiased md:pb-0">
+        <JsonLd />
+        <FundraiserBanner />
+        <SiteHeader />
+        <main>{children}</main>
+        <SiteFooter />
+        <MobileDock />
       </body>
     </html>
   );

@@ -1,338 +1,221 @@
+import Image from "next/image";
+import Link from "next/link";
+import { Countdown } from "@/components/Countdown";
+import { fundraiser, site } from "@/lib/site";
+
 export default function Home() {
   return (
-    <div className="min-h-screen bg-stone-950 text-stone-100">
-      {/* Sticky Fundraiser Banner */}
-      <div className="sticky top-0 z-50 bg-red-800 text-white text-center py-3 px-4 shadow-lg">
-        <p className="font-bold text-sm sm:text-base">
-          🚨 20th Annual Shriners Fundraiser — THIS Saturday Aug 29 • Limited to 450 tickets •{" "}
-          <a href="#fundraiser" className="underline font-extrabold hover:text-amber-200">
-            Get Tickets Now
-          </a>
-        </p>
-      </div>
-
-      {/* Header / Nav */}
-      <header className="border-b border-stone-800 bg-stone-900/80 backdrop-blur">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl">🌈</span>
-            <div>
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-amber-400">
-                Rainbow Saloon
-              </h1>
-              <p className="text-xs text-stone-400">Roy, Utah • Est. decades ago</p>
+    <>
+      <section className="relative isolate overflow-hidden bg-char">
+        <div className="grid lg:min-h-[78svh] lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
+          <div className="relative order-1 min-h-[48svh] lg:order-2 lg:min-h-full">
+            <Image
+              src="/images/wings-hero.jpg"
+              alt="Extra-saucy house-sauce hot wings at Rainbow Saloon in Roy, Utah"
+              fill
+              priority
+              className="object-cover object-center"
+            />
+            <div className="absolute inset-x-0 bottom-0 flex justify-center p-4 lg:hidden">
+              <Link href="/fundraiser" className="btn btn-primary w-full max-w-sm shadow-lg">
+                Get Aug 29 tickets
+              </Link>
             </div>
           </div>
-          <nav className="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm font-medium">
-            <a href="#wings" className="hover:text-amber-400 transition">
-              Wings
-            </a>
-            <a href="#menu" className="hover:text-amber-400 transition">
-              Menu
-            </a>
-            <a href="#fundraiser" className="hover:text-amber-400 transition">
-              Fundraiser
-            </a>
-            <a href="#about" className="hover:text-amber-400 transition">
-              Our Story
-            </a>
-            <a href="#visit" className="hover:text-amber-400 transition">
-              Visit
-            </a>
-            <a
-              href="tel:8017769678"
-              className="bg-amber-500 text-stone-950 px-4 py-1.5 rounded-full font-semibold hover:bg-amber-400 transition"
-            >
-              Call (801) 776-9678
-            </a>
-          </nav>
-        </div>
-      </header>
-
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-red-950/60 via-stone-950/80 to-stone-950" />
-        <div className="relative max-w-6xl mx-auto px-4 py-16 sm:py-24 text-center">
-          <p className="text-amber-400 font-semibold tracking-widest uppercase text-sm mb-3">
-            Roy’s Hometown Bar
-          </p>
-          <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tight mb-4 leading-tight">
-            Famous Extra-Saucy
-            <br />
-            <span className="text-red-500">Hot Wings</span>
-          </h2>
-          <p className="text-lg sm:text-xl text-stone-300 max-w-2xl mx-auto mb-8">
-            House-made sauce. Perfect sweet heat. The wings locals drive for.
-            Plus legendary Steak Nights every Thursday & Saturday.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="#fundraiser"
-              className="inline-flex items-center justify-center bg-red-700 hover:bg-red-600 text-white font-bold px-8 py-4 rounded-lg text-lg shadow-lg transition"
-            >
-              Shriners Fundraiser Tickets →
-            </a>
-            <a
-              href="#wings"
-              className="inline-flex items-center justify-center border-2 border-amber-500 text-amber-400 hover:bg-amber-500 hover:text-stone-950 font-bold px-8 py-4 rounded-lg text-lg transition"
-            >
-              See the Wings
-            </a>
-          </div>
-          <p className="mt-8 text-stone-400 text-sm italic">
-            “If you want hot wings, this is the place!” — Local reviews
-          </p>
-        </div>
-      </section>
-
-      {/* Wings Hero Section */}
-      <section id="wings" className="bg-stone-900 py-16 sm:py-20">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-10 items-center">
-            <div>
-              <h3 className="text-3xl sm:text-4xl font-bold text-amber-400 mb-4">
-                The Wings That Put Us on the Map
-              </h3>
-              <p className="text-stone-300 text-lg leading-relaxed mb-4">
-                Extra saucy. Tossed in our own house-made sauce — a perfect blend of
-                BBQ and tomatoey sweetness with a kick that starts mild and builds
-                just right. Mild still has flavor. Locals call them the best in the
-                state.
-              </p>
-              <p className="text-stone-400 mb-6">
-                Available for dine-in or to-go. Coming soon: take our signature sauce
-                home in convenient flex pouches or bottles so you can recreate the
-                magic.
-              </p>
-              <a
-                href="tel:8017769678"
-                className="inline-block bg-red-700 hover:bg-red-600 text-white font-semibold px-6 py-3 rounded-lg transition"
-              >
-                Call for To-Go Orders
-              </a>
-            </div>
-            <div className="bg-stone-800 rounded-2xl p-8 border border-stone-700 text-center">
-              <div className="text-6xl mb-4">🍗🔥</div>
-              <p className="text-amber-400 font-bold text-xl mb-2">Signature House Sauce</p>
-              <p className="text-stone-400 text-sm">
-                Extra saucy by design. We recommend flex-pack pouches for single
-                orders or retail bottles so the wings stay crispy and the sauce stays
-                perfect.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Fundraiser Section */}
-      <section id="fundraiser" className="py-16 sm:py-20 bg-red-950/40 border-y border-red-900/50">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <p className="text-amber-400 font-semibold uppercase tracking-widest text-sm mb-2">
-            20th Annual • August 29, 2026
-          </p>
-          <h3 className="text-3xl sm:text-5xl font-extrabold mb-4">
-            Shriners Children’s Hospital Fundraiser
-          </h3>
-          <p className="text-xl text-stone-300 mb-6">
-            We’ve raised over <span className="text-amber-400 font-bold">$250,000</span>{" "}
-            thanks to our community. Let’s keep it going.
-          </p>
-
-          <div className="bg-stone-900/80 rounded-2xl p-6 sm:p-8 text-left mb-8 border border-stone-700">
-            <h4 className="text-xl font-bold text-amber-400 mb-4">Ticket Details</h4>
-            <ul className="space-y-2 text-stone-300 mb-6">
-              <li>• Limited to only <strong>450 tickets</strong></li>
-              <li>• <strong>$185</strong> per ticket</li>
-              <li>• Includes 2 entries into the party, 2 dinners, and 2 bands</li>
-              <li>• Chance at 100+ prizes: grill, Blackstone, kayak, paddle board, swimming pool, bicycle, gift certificates, $1,000 wakeboard, surfboard, snowboard, and more</li>
-              <li>• You do <strong>not</strong> have to be present to win — we call all winners</li>
-            </ul>
-
-            <h4 className="text-xl font-bold text-amber-400 mb-3">How to Get Tickets</h4>
-            <ol className="list-decimal list-inside space-y-2 text-stone-300 mb-6">
-              <li>
-                <strong>Venmo</strong> the donation (include “donation”, your full name,
-                address, and phone number)
-              </li>
-              <li>Stop by Rainbow Saloon in person</li>
-              <li>
-                Call{" "}
-                <a href="tel:8017769678" className="text-amber-400 underline">
-                  (801) 776-9678
-                </a>{" "}
-                with questions
-              </li>
-            </ol>
-            <p className="text-stone-400 text-sm">
-              All proceeds go directly to Shriners Children’s Hospital. Thank you for
-              supporting this incredible cause.
+          <div className="order-2 flex flex-col justify-center px-4 py-10 sm:px-8 lg:order-1 lg:px-12 lg:py-16">
+            <p className="kicker">Hometown bar · Roy, Utah</p>
+            <h1 className="display mt-4 max-w-xl text-4xl text-cream sm:text-6xl">
+              Extra-saucy hot wings.
+              <span className="block text-amber">House sauce. Local legend.</span>
+            </h1>
+            <p className="mt-5 max-w-md text-base text-paper/85 sm:text-lg">
+              BBQ-tomatoey sweet heat, piled on crispy wings. Thursday & Saturday
+              steak night. This Saturday: the 20th Annual Shriners fundraiser.
             </p>
-          </div>
-
-          <a
-            href="tel:8017769678"
-            className="inline-flex items-center justify-center bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold px-10 py-4 rounded-lg text-lg shadow-lg transition"
-          >
-            Call Now for Tickets
-          </a>
-        </div>
-      </section>
-
-      {/* Menu Teaser */}
-      <section id="menu" className="py-16 sm:py-20 bg-stone-900">
-        <div className="max-w-6xl mx-auto px-4">
-          <h3 className="text-3xl sm:text-4xl font-bold text-center text-amber-400 mb-10">
-            More Than Just Wings
-          </h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-stone-800 rounded-xl p-6 border border-stone-700">
-              <div className="text-3xl mb-3">🥩</div>
-              <h4 className="font-bold text-lg mb-2">Steak Night</h4>
-              <p className="text-stone-400 text-sm">
-                Thursdays & Saturdays. Perfectly cooked steak topped with sautéed
-                mushrooms and onions. A local legend.
-              </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link href="/fundraiser" className="btn btn-primary px-8 py-4 text-sm">
+                Get Aug 29 tickets
+              </Link>
+              <Link href="/wings" className="btn btn-ghost px-8 py-4 text-sm">
+                See the wings
+              </Link>
             </div>
-            <div className="bg-stone-800 rounded-xl p-6 border border-stone-700">
-              <div className="text-3xl mb-3">🍔</div>
-              <h4 className="font-bold text-lg mb-2">Burgers & More</h4>
-              <p className="text-stone-400 text-sm">
-                Cheeseburgers, pastrami burger, nachos, zucchini fries, combo
-                appetizer samplers — cooked to order.
-              </p>
-            </div>
-            <div className="bg-stone-800 rounded-xl p-6 border border-stone-700">
-              <div className="text-3xl mb-3">🎱</div>
-              <h4 className="font-bold text-lg mb-2">Games & Vibes</h4>
-              <p className="text-stone-400 text-sm">
-                Pool, darts, TVs, outdoor patio, full bar. Good for groups. ID
-                checked at the door. Everyone welcome.
-              </p>
+            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-xs font-semibold uppercase tracking-wider text-muted">
+              <span>Open {site.hours}</span>
+              <span>Call {site.phoneDisplay}</span>
+              <span>{site.impact} to Shriners</span>
             </div>
           </div>
-          <p className="text-center text-stone-500 mt-8 text-sm">
-            Full menu available at the bar. Call ahead for large parties or to-go.
-          </p>
         </div>
       </section>
 
-      {/* About */}
-      <section id="about" className="py-16 sm:py-20 bg-stone-950">
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <h3 className="text-3xl sm:text-4xl font-bold text-amber-400 mb-6">
-            Our Story
-          </h3>
-          <p className="text-lg text-stone-300 leading-relaxed mb-6">
-            Rainbow Saloon is more than just a bar. It’s a family.
-          </p>
-          <p className="text-stone-400 leading-relaxed mb-6">
-            Owned and operated by Terry and Julie Strickland with their daughter
-            Brittni, the Rainbow has been a Roy institution for decades. Terry and
-            Julie met while working here, took over the business, and built a place
-            where everyone — from 21 to 91 — is welcome.
-          </p>
-          <p className="text-xl font-semibold text-amber-400 italic mb-6">
-            “Saving lives, one jar at a time.”
-          </p>
-          <p className="text-stone-400 leading-relaxed">
-            Whether it’s our famous fundraisers for Shriners Children’s Hospital,
-            support for local families in need, or simply being a safe, friendly
-            place to celebrate or unwind — community is at the heart of everything
-            we do.
-          </p>
+      <section className="border-y border-cream/10 bg-ember-deep">
+        <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 md:grid-cols-[1fr_auto] md:items-center">
+          <div>
+            <p className="kicker text-amber-bright">{fundraiser.dateLabel}</p>
+            <h2 className="display mt-2 text-3xl sm:text-4xl">
+              20th Annual Shriners Children’s Hospital Fundraiser
+            </h2>
+            <p className="mt-3 max-w-2xl text-paper/85">
+              Only {fundraiser.ticketCap} tickets at {fundraiser.priceLabel}. Each
+              includes 2 entries, 2 dinners, 2 bands, and 100+ prizes. You do not
+              need to be present to win. All proceeds to Shriners.
+            </p>
+            <Link href="/fundraiser" className="btn btn-amber mt-6">
+              Full details & tickets
+            </Link>
+          </div>
+          <Countdown />
         </div>
       </section>
 
-      {/* Visit / Contact */}
-      <section id="visit" className="py-16 sm:py-20 bg-stone-900 border-t border-stone-800">
-        <div className="max-w-6xl mx-auto px-4">
-          <h3 className="text-3xl sm:text-4xl font-bold text-center text-amber-400 mb-10">
-            Visit Us
-          </h3>
-          <div className="grid md:grid-cols-2 gap-10">
+      <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-20 lg:grid-cols-2">
+        <div className="relative aspect-[4/3] overflow-hidden rounded-3xl">
+          <Image
+            src="/images/wings-toss.jpg"
+            alt="Wings being tossed in extra house sauce"
+            fill
+            className="object-cover"
+          />
+        </div>
+        <div>
+          <p className="kicker">The house sauce</p>
+          <h2 className="display mt-3 text-4xl sm:text-5xl">
+            Extra saucy on purpose.
+          </h2>
+          <p className="mt-5 text-lg text-paper/85">
+            Locals don’t come for a dry rub. They come for the pour — a
+            BBQ-tomatoey sweet-heat that clings, drips, and keeps you reaching
+            for the next wing. Mild still has flavor. Heat still has balance.
+          </p>
+          <p className="mt-4 text-paper/75">
+            Take them to-go, or take the sauce home in stand-up flex pouches
+            with a spout (our recommendation) or bottles.
+          </p>
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+            <Link href="/wings" className="btn btn-primary">
+              The wing story
+            </Link>
+            <Link href="/shop" className="btn btn-ghost">
+              Order sauce & pickup
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-wood">
+        <div className="mx-auto max-w-6xl px-4 py-20">
+          <div className="flex items-end justify-between gap-6">
             <div>
-              <h4 className="font-bold text-xl mb-4">Hours & Location</h4>
-              <p className="text-stone-300 mb-2">
-                <strong>Open daily</strong>
-                <br />
-                11:00 AM – 2:00 AM
-              </p>
-              <p className="text-stone-300 mb-4">
-                6045 S 1900 W
-                <br />
-                Roy, UT 84067
-              </p>
-              <p className="mb-4">
-                <a
-                  href="tel:8017769678"
-                  className="text-amber-400 font-semibold text-lg hover:underline"
-                >
-                  (801) 776-9678
-                </a>
-              </p>
-              <p className="text-stone-400 text-sm mb-6">
-                Free parking • Outdoor patio • Wheelchair accessible • Full bar
-                (beer, wine, cocktails) • ID required
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href="https://www.facebook.com/p/Rainbow-Saloon-100063619688255/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-lg text-sm font-medium transition"
-                >
-                  Facebook
-                </a>
-                <a
-                  href="https://www.instagram.com/rainbowsaloonandgrill/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-pink-600 hover:bg-pink-500 text-white px-5 py-2 rounded-lg text-sm font-medium transition"
-                >
-                  Instagram
-                </a>
-                <a
-                  href="https://www.yelp.com/biz/rainbow-saloon-roy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-red-600 hover:bg-red-500 text-white px-5 py-2 rounded-lg text-sm font-medium transition"
-                >
-                  Yelp
-                </a>
-              </div>
+              <p className="kicker">From the kitchen</p>
+              <h2 className="display mt-3 text-4xl">More than wings</h2>
             </div>
-            <div className="bg-stone-800 rounded-xl p-6 border border-stone-700">
-              <h4 className="font-bold text-xl mb-4">Map & Directions</h4>
-              <div className="aspect-video bg-stone-700 rounded-lg flex items-center justify-center text-stone-400 text-sm">
-                <a
-                  href="https://maps.google.com/?q=6045+S+1900+W,+Roy,+UT+84067"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-amber-400"
-                >
-                  Open in Google Maps →
-                </a>
-              </div>
-              <p className="text-stone-500 text-xs mt-3">
-                Easy access off SR-126 / 1900 W in Roy.
-              </p>
-            </div>
+            <Link href="/menu" className="hidden text-sm font-bold uppercase tracking-widest text-amber md:inline">
+              Full teaser →
+            </Link>
+          </div>
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                src: "/images/steak-night.jpg",
+                title: "Steak Night",
+                copy: "Thursday & Saturday. Mushrooms, onions, the plate that brings people back.",
+              },
+              {
+                src: "/images/wings-hero.jpg",
+                title: "Hot Wings",
+                copy: "Roy’s extra-saucy house-sauce wings. Dine-in or to-go.",
+              },
+              {
+                src: "/images/burger.jpg",
+                title: "Burgers",
+                copy: "Including the pastrami burger the regulars swear by.",
+              },
+              {
+                src: "/images/cheese-fries.jpg",
+                title: "Cheese Fries",
+                copy: "Extra cheesy. The other thing people drive for.",
+              },
+            ].map((card) => (
+              <Link
+                key={card.title}
+                href="/menu"
+                className="group overflow-hidden rounded-2xl bg-plank"
+              >
+                <div className="relative aspect-[4/3]">
+                  <Image
+                    src={card.src}
+                    alt={card.title}
+                    fill
+                    className="object-cover transition duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-5">
+                  <h3 className="font-display text-2xl">{card.title}</h3>
+                  <p className="mt-2 text-sm text-muted">{card.copy}</p>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-stone-950 border-t border-stone-800 py-8 text-center text-stone-500 text-sm">
-        <p className="mb-2">
-          © {new Date().getFullYear()} Rainbow Saloon • 6045 S 1900 W, Roy, UT 84067
-        </p>
-        <p className="italic text-stone-600">
-          Saving lives, one jar at a time.
-        </p>
-        <p className="mt-4 text-xs">
-          Site built for speed, value & ownership handoff • Preview version
-        </p>
-      </footer>
-    </div>
+      <section className="relative isolate overflow-hidden">
+        <Image
+          src="/images/bar-interior.jpg"
+          alt="Dark wood bar interior at Rainbow Saloon"
+          fill
+          className="object-cover opacity-40"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-char via-char/80 to-transparent" />
+        <div className="relative mx-auto max-w-6xl px-4 py-24">
+          <p className="kicker">Our story</p>
+          <h2 className="display mt-3 max-w-3xl text-4xl sm:text-5xl">
+            Terry, Julie, and Brittni. A family first, a bar second.
+          </h2>
+          <p className="mt-5 max-w-2xl text-lg text-paper/85">
+            Terry and Julie met behind this bar, took it over when the original
+            closed, and built a place where 21 to 91 are welcome — whether you
+            drink or not. {site.slogan}
+          </p>
+          <Link href="/story" className="btn btn-ghost mt-8">
+            Read the story
+          </Link>
+        </div>
+      </section>
+
+      <section className="mx-auto grid max-w-6xl gap-10 px-4 py-20 lg:grid-cols-2">
+        <div>
+          <p className="kicker">Visit</p>
+          <h2 className="display mt-3 text-4xl">Come as you are.</h2>
+          <p className="mt-4 text-paper/80">
+            {site.address.street}
+            <br />
+            {site.address.city}, {site.address.state} {site.address.zip}
+          </p>
+          <p className="mt-3 font-semibold">{site.hoursShort}</p>
+          <a href={site.phoneHref} className="mt-2 block text-2xl font-bold text-amber">
+            {site.phoneDisplay}
+          </a>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <a href={site.mapsUrl} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
+              Open map
+            </a>
+            <Link href="/visit" className="btn btn-ghost">
+              Hours & directions
+            </Link>
+          </div>
+        </div>
+        <div className="overflow-hidden rounded-3xl border border-cream/10">
+          <iframe
+            title="Map to Rainbow Saloon"
+            src={site.mapsEmbed}
+            className="h-80 w-full"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
+      </section>
+    </>
   );
 }
