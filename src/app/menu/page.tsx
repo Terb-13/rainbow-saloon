@@ -64,8 +64,8 @@ export default function MenuPage() {
         <Link href="/order" className="btn btn-primary">
           Order now
         </Link>
-        <Link href="/shop" className="btn btn-ghost">
-          Shop sauce & wings
+        <Link href="/drinks" className="btn btn-ghost">
+          Drinks
         </Link>
       </div>
     </section>

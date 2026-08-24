@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Barlow, Fraunces } from "next/font/google";
+import { AgeGate } from "@/components/AgeGate";
 import { FundraiserBanner } from "@/components/FundraiserBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { MobileDock } from "@/components/MobileDock";
@@ -59,6 +60,7 @@ export default function RootLayout({
     <html lang="en" className={`${fraunces.variable} ${barlow.variable}`}>
       <body className="min-h-dvh bg-char pb-28 text-cream antialiased md:pb-0">
         <JsonLd />
+        <AgeGate />
         <FundraiserBanner />
         <SiteHeader />
         <main>{children}</main>

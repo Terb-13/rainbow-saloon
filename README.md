@@ -30,6 +30,7 @@ npm start
 | `/fundraiser` | Full ticket conversion page |
 | `/wings` | Extra-saucy house sauce story + to-go |
 | `/menu` | Steak night, wings, burgers, fries |
+| `/drinks` | Full bar facts — no invented tap list |
 | `/story` | Terry, Julie, Brittni — community story |
 | `/visit` | Hours, click-to-call, map |
 | `/shop` | Flex pouches (recommended), bottles, wing pickup |

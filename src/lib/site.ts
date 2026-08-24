@@ -58,6 +58,7 @@ export const fundraiser = {
 export const nav = [
   { href: "/wings", label: "Wings" },
   { href: "/menu", label: "Menu" },
+  { href: "/drinks", label: "Drinks" },
   { href: "/fundraiser", label: "Fundraiser" },
   { href: "/order", label: "Order" },
   { href: "/story", label: "Our Story" },
