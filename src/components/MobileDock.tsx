@@ -11,8 +11,8 @@ export function MobileDock() {
         <a href={site.phoneHref} className="btn btn-amber py-3.5 text-[11px]">
           Call
         </a>
-        <Link href="/shop" className="btn btn-ghost py-3.5 text-[11px]">
-          Wings + sauce
+        <Link href="/order" className="btn btn-ghost py-3.5 text-[11px]">
+          Chat order
         </Link>
       </div>
     </div>

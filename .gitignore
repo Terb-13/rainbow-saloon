@@ -46,3 +46,6 @@ next-env.d.ts
 /gauntlet/refs/
 /gauntlet/ours/
 /gauntlet/blind/
+
+# live kitchen tickets
+/data/orders.json

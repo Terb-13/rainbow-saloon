@@ -3,6 +3,7 @@ import { Barlow, Fraunces } from "next/font/google";
 import { FundraiserBanner } from "@/components/FundraiserBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { MobileDock } from "@/components/MobileDock";
+import { OrderChat } from "@/components/OrderChat";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { site } from "@/lib/site";
@@ -63,6 +64,7 @@ export default function RootLayout({
         <main>{children}</main>
         <SiteFooter />
         <MobileDock />
+        <OrderChat />
       </body>
     </html>
   );

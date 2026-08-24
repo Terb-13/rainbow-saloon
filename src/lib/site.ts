@@ -59,6 +59,7 @@ export const nav = [
   { href: "/wings", label: "Wings" },
   { href: "/menu", label: "Menu" },
   { href: "/fundraiser", label: "Fundraiser" },
+  { href: "/order", label: "Order" },
   { href: "/story", label: "Our Story" },
   { href: "/shop", label: "Shop" },
   { href: "/visit", label: "Visit" },
