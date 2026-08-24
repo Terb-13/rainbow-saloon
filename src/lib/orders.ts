@@ -8,14 +8,22 @@ export type OrderLine = {
   name: string;
   qty: number;
   coa: CoaCode;
-  priceCents: number | null;
+  priceCents: number;
 };
+
+export type OrderStatus =
+  | "awaiting_payment"
+  | "paid"
+  | "working"
+  | "done"
+  | "cancelled";
 
 export type Order = {
   id: string;
   createdAt: string;
-  channel: "chat";
-  status: "new" | "working" | "done" | "cancelled";
+  paidAt?: string;
+  channel: "chat" | "web";
+  status: OrderStatus;
   customer: {
     name: string;
     phone: string;
@@ -26,7 +34,8 @@ export type Order = {
   notes?: string;
   ticketCount: number;
   foodCount: number;
-  knownTotalCents: number | null;
+  totalCents: number;
+  payment: "unpaid" | "demo" | "stripe";
 };
 
 type G = typeof globalThis & { __rsOrders?: Order[] };
@@ -66,12 +75,18 @@ export async function listOrders(): Promise<Order[]> {
   return [...orders].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }
 
+export async function getOrder(id: string): Promise<Order | null> {
+  const orders = await load();
+  return orders.find((o) => o.id === id) ?? null;
+}
+
 export async function createOrder(input: {
   name: string;
   phone: string;
   address?: string;
   pickupWindow?: string;
   notes?: string;
+  channel?: Order["channel"];
   items: { sku: string; qty: number }[];
 }): Promise<Order> {
   const lines: OrderLine[] = [];
@@ -96,18 +111,14 @@ export async function createOrder(input: {
   const foodCount = lines
     .filter((l) => l.coa !== CHAT_TICKET_COA)
     .reduce((n, l) => n + l.qty, 0);
-
-  const priced = lines.every((l) => l.priceCents != null);
-  const knownTotalCents = priced
-    ? lines.reduce((n, l) => n + (l.priceCents ?? 0) * l.qty, 0)
-    : null;
+  const totalCents = lines.reduce((n, l) => n + l.priceCents * l.qty, 0);
 
   const orders = await load();
   const order: Order = {
     id: nextId(orders, ticketCount > 0),
     createdAt: new Date().toISOString(),
-    channel: "chat",
-    status: "new",
+    channel: input.channel ?? "chat",
+    status: "awaiting_payment",
     customer: {
       name: input.name.trim(),
       phone: input.phone.trim(),
@@ -118,18 +129,30 @@ export async function createOrder(input: {
     notes: input.notes?.trim() || undefined,
     ticketCount,
     foodCount,
-    knownTotalCents,
+    totalCents,
+    payment: "unpaid",
   };
   orders.push(order);
   await persist(orders);
   return order;
 }
 
-export async function setOrderStatus(id: string, status: Order["status"]) {
+export async function setOrderStatus(id: string, status: OrderStatus) {
   const orders = await load();
   const order = orders.find((o) => o.id === id);
   if (!order) return null;
   order.status = status;
+  await persist(orders);
+  return order;
+}
+
+export async function markPaid(id: string, method: "demo" | "stripe") {
+  const orders = await load();
+  const order = orders.find((o) => o.id === id);
+  if (!order) return null;
+  order.status = "paid";
+  order.payment = method;
+  order.paidAt = new Date().toISOString();
   await persist(orders);
   return order;
 }

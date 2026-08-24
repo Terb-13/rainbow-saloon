@@ -15,8 +15,7 @@ export default function ShopPage() {
       <p className="kicker">Shop & pickup</p>
       <h1 className="display mt-3 text-5xl">Sauce in a pouch. Wings in a box.</h1>
       <p className="mt-4 max-w-2xl text-lg text-paper/80">
-        No cart gymnastics. Call or send the pickup note — we’ll have it ready
-        at {site.address.street}.
+        Demo prices. Pay online, then pick up at {site.address.street}.
       </p>
 
       <div className="mt-12 grid gap-8 lg:grid-cols-2">
@@ -51,10 +50,10 @@ export default function ShopPage() {
             </p>
             <p className="mt-2 text-paper/75">
               Stand-up pouch with a spout. Pours over wings without a ladle.
-              Cooler-friendly. Priced at the bar — call to hold one.
+              Cooler-friendly. Demo price $9.99.
             </p>
             <a href="#pickup" className="btn btn-primary mt-5">
-              Pickup pouch
+              Buy pouch — $9.99
             </a>
           </div>
         </article>
@@ -85,11 +84,11 @@ export default function ShopPage() {
               BBQ-tomatoey sweet-heat · Extra saucy
             </p>
             <p className="mt-2 text-paper/75">
-              For the fridge door. Same sauce that hits the wings. Priced at the
-              bar.
+              For the fridge door. Same sauce that hits the wings. Demo price
+              $8.99.
             </p>
             <a href="#pickup" className="btn btn-ghost mt-5">
-              Pickup bottle
+              Buy bottle — $8.99
             </a>
           </div>
         </article>
@@ -107,11 +106,11 @@ export default function ShopPage() {
         <div className="p-8">
           <h2 className="font-display text-3xl">Wing pickup</h2>
           <p className="mt-3 text-paper/80">
-            Call when you’re rolling. We toss extra-saucy so they don’t sit.
-            Thursday & Saturday you can add steak night — if we still have it.
+            6-piece $12.99 · 12-piece $21.99 (demo). Pay online, we toss when
+            you’re close. Thursday & Saturday steak night $22.
           </p>
-          <a href={site.phoneHref} className="btn btn-primary mt-6">
-            Call {site.phoneDisplay}
+          <a href="#pickup" className="btn btn-primary mt-6">
+            Pay for wings
           </a>
         </div>
       </div>

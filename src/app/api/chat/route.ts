@@ -9,7 +9,9 @@ import {
 } from "ai";
 import { xai } from "@ai-sdk/xai";
 import { z } from "zod";
+import { checkoutUrl } from "@/lib/checkout";
 import { catalog, catalogForPrompt, isSteakNight } from "@/lib/catalog";
+import { dollars } from "@/lib/money";
 import { createOrder } from "@/lib/orders";
 import { fundraiser, site } from "@/lib/site";
 
@@ -37,26 +39,27 @@ export async function POST(req: Request) {
 
   const result = streamText({
     model: xai.responses("grok-4.6"),
-    system: `You are the Rainbow Saloon order desk in Roy, Utah — a hometown bartender taking to-go food and Shriners fundraiser tickets over chat.
+    system: `You are the Rainbow Saloon order desk in Roy, Utah — a hometown bartender taking paid to-go food and Shriners fundraiser tickets over chat.
 
-Voice: warm, short, local. Never corporate. Never invent menu prices. Food and sauce prices are confirmed at pickup. Tickets are ${fundraiser.priceLabel} each.
+Voice: warm, short, local. Never corporate. Quote demo menu prices exactly as listed. Say they are demo prices.
 
 Facts you must not change:
 - Address: ${site.address.full}
 - Phone: ${site.phoneDisplay}
 - Hours: ${site.hours}
 - Steak night is Thursday & Saturday only. Steak night today (Utah time): ${isSteakNight() ? "YES" : "NO"}.
-- Fundraiser: ${fundraiser.title}, ${fundraiser.dateLabel}. ${fundraiser.ticketCap} tickets, ${fundraiser.priceLabel}. Includes 2 entries, 2 dinners, 2 bands, 100+ prizes. Do not need to be present to win. All proceeds to Shriners. Venmo: include the word "donation" plus full name, address, and phone. Confirm Venmo handle by calling the bar.
-- New digital order codes: COA 4300 (chat food/sauce) and COA 4510 (chat tickets).
+- Fundraiser: ${fundraiser.title}, ${fundraiser.dateLabel}. ${fundraiser.ticketCap} tickets, ${fundraiser.priceLabel}. Includes 2 entries, 2 dinners, 2 bands, 100+ prizes. Do not need to be present to win. All proceeds to Shriners.
+- Digital order codes: COA 4300 (chat food/sauce) and COA 4510 (chat tickets).
+- Payment is online. After placeOrder, the guest taps Pay now. Demo card 4242 4242 4242 4242. Do not invent other prices.
 
-Catalog:
+Catalog (demo):
 ${catalogForPrompt()}
 
 How to take an order:
-1. Ask what they want. Suggest wings, sauce pouches, or Aug 29 tickets if they're vague.
+1. Ask what they want. Suggest wings, sauce pouches, or Aug 29 tickets if they're vague. Quote the demo price.
 2. Collect name and phone for every order. For tickets also collect mailing address. For food ask pickup window if they have one.
-3. Repeat the order back, then call placeOrder. Do not claim a card was charged. Food totals are "confirm at the bar." Ticket totals are qty × ${fundraiser.priceLabel}.
-4. After placeOrder succeeds, give them the order id (RS-4300-… or RS-4510-…) and tell them to call ${site.phoneDisplay} if anything's off. For tickets, remind them to Venmo with "donation" + name/address/phone.
+3. Repeat the cart and the dollar total, then call placeOrder.
+4. After placeOrder succeeds, give the order id, the total, and tell them to tap Pay now in the chat (payUrl). Kitchen does not start the food until it is paid.
 5. If they only want hours, directions, or the story, answer — don't force an order.
 
 Never invent SKUs. Never promise items not in the catalog.`,
@@ -75,10 +78,7 @@ Never invent SKUs. Never promise items not in the catalog.`,
               name: item.name,
               notes: item.notes,
               coa: item.coa,
-              price:
-                item.priceCents == null
-                  ? "confirm at pickup"
-                  : `$${(item.priceCents / 100).toFixed(0)}`,
+              price: dollars(item.priceCents),
             })),
         }),
       }),
@@ -108,21 +108,17 @@ Never invent SKUs. Never promise items not in the catalog.`,
             };
           }
           try {
-            const order = await createOrder(input);
+            const origin = new URL(req.url).origin;
+            const order = await createOrder({ ...input, channel: "chat" });
+            const payUrl = await checkoutUrl(order, origin);
             return {
               ok: true,
               id: order.id,
               ticketCount: order.ticketCount,
               foodCount: order.foodCount,
-              knownTotal:
-                order.knownTotalCents == null
-                  ? "confirm at pickup"
-                  : `$${(order.knownTotalCents / 100).toFixed(0)}`,
+              total: dollars(order.totalCents),
+              payUrl,
               lines: order.lines,
-              venmo:
-                order.ticketCount > 0
-                  ? 'Venmo with the word "donation" plus full name, address, and phone. Call to confirm the handle.'
-                  : undefined,
             };
           } catch (err) {
             return {

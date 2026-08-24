@@ -1,35 +1,50 @@
 "use client";
 
 import { useState } from "react";
-import { site } from "@/lib/site";
+import { catalog } from "@/lib/catalog";
+import { dollars } from "@/lib/money";
+
+const options = [
+  { sku: "sauce-pouch", label: "Sauce pouch (recommended)" },
+  { sku: "sauce-bottle", label: "Sauce bottle" },
+  { sku: "wings-12", label: "Wings 12-piece" },
+  { sku: "wings-6", label: "Wings 6-piece" },
+] as const;
 
 export function PickupForm() {
-  const [done, setDone] = useState(false);
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
 
-  if (done) {
-    return (
-      <div className="rounded-3xl border border-amber/40 bg-wood p-8">
-        <h2 className="font-display text-3xl">Got it. Now call it in.</h2>
-        <p className="mt-3 text-paper/80">
-          Pickup notes don’t charge a card. Call{" "}
-          <a href={site.phoneHref} className="font-bold text-amber">
-            {site.phoneDisplay}
-          </a>{" "}
-          to confirm sauce pouches, bottles, or a wing order.
-        </p>
-      </div>
-    );
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setBusy(true);
+    setError("");
+    const form = new FormData(e.currentTarget);
+    const sku = String(form.get("item"));
+    const qty = Number(form.get("qty") || 1);
+    const res = await fetch("/api/checkout", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        name: form.get("name"),
+        phone: form.get("phone"),
+        pickupWindow: form.get("notes"),
+        items: [{ sku, qty }],
+      }),
+    });
+    const data = await res.json();
+    setBusy(false);
+    if (!res.ok) {
+      setError(data.error ?? "Could not start checkout");
+      return;
+    }
+    window.location.href = data.url;
   }
 
   return (
-    <form
-      className="rounded-3xl border border-cream/10 bg-wood p-8"
-      onSubmit={(e) => {
-        e.preventDefault();
-        setDone(true);
-      }}
-    >
-      <h2 className="font-display text-3xl">Pickup note</h2>
+    <form className="rounded-3xl border border-cream/10 bg-wood p-8" onSubmit={onSubmit}>
+      <h2 className="font-display text-3xl">Pay & pickup</h2>
+      <p className="mt-2 text-sm text-amber">Demo prices. Pay online, then grab it at the bar.</p>
       <div className="mt-6 grid gap-4">
         <input
           required
@@ -48,20 +63,35 @@ export function PickupForm() {
           name="item"
           className="rounded-lg border border-cream/15 bg-char px-3 py-3 outline-none focus:border-amber"
         >
-          <option>Sauce pouch (recommended)</option>
-          <option>Sauce bottle</option>
-          <option>Wings to-go</option>
-          <option>Pouch + wings</option>
+          {options.map((opt) => {
+            const item = catalog.find((c) => c.sku === opt.sku);
+            return (
+              <option key={opt.sku} value={opt.sku}>
+                {opt.label} — {item ? dollars(item.priceCents) : ""}
+              </option>
+            );
+          })}
+        </select>
+        <select
+          name="qty"
+          className="rounded-lg border border-cream/15 bg-char px-3 py-3 outline-none focus:border-amber"
+        >
+          {[1, 2, 3, 4].map((n) => (
+            <option key={n} value={n}>
+              Qty {n}
+            </option>
+          ))}
         </select>
         <textarea
           name="notes"
-          rows={3}
-          placeholder="How many, heat, pickup window…"
+          rows={2}
+          placeholder="Pickup window…"
           className="rounded-lg border border-cream/15 bg-char px-3 py-3 outline-none focus:border-amber"
         />
       </div>
-      <button type="submit" className="btn btn-amber mt-6 w-full">
-        Send pickup note
+      {error && <p className="mt-3 text-sm text-amber">{error}</p>}
+      <button type="submit" className="btn btn-amber mt-6 w-full" disabled={busy}>
+        {busy ? "Opening checkout…" : "Pay now"}
       </button>
     </form>
   );

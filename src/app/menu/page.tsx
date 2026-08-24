@@ -14,22 +14,26 @@ const items = [
   {
     src: "/images/wings-hero.jpg",
     title: "Extra-saucy hot wings",
-    copy: "House-made BBQ-tomatoey sweet-heat. The thing we’re famous for.",
+    price: "$12.99 / $21.99",
+    copy: "6-piece or 12-piece. House BBQ-tomatoey sweet-heat. Demo price.",
   },
   {
     src: "/images/steak-night.jpg",
     title: "Steak Night",
-    copy: "Thursday & Saturday. Sautéed mushrooms and onions. A Roy ritual.",
+    price: "$22.00",
+    copy: "Thursday & Saturday. Sautéed mushrooms and onions. Demo price.",
   },
   {
     src: "/images/burger.jpg",
     title: "Burgers",
-    copy: "Cheeseburgers and the pastrami burger locals mention by name.",
+    price: "$11.99 / $14.99",
+    copy: "Cheeseburger or pastrami burger. Demo price.",
   },
   {
     src: "/images/cheese-fries.jpg",
     title: "Extra-cheesy cheese fries",
-    copy: "The other reason people don’t leave hungry.",
+    price: "$8.99",
+    copy: "The other reason people don’t leave hungry. Demo price.",
   },
 ];
 
@@ -39,9 +43,8 @@ export default function MenuPage() {
       <p className="kicker">Kitchen</p>
       <h1 className="display mt-3 text-5xl">What to order</h1>
       <p className="mt-4 max-w-2xl text-lg text-paper/80">
-        Full menu lives at the bar. This is the greatest-hits reel — the plates
-        people actually talk about. Call {site.phoneDisplay} for to-go or a
-        large table.
+        Demo prices for online pay. Pay in chat or on the shop, then pick up
+        here. Call {site.phoneDisplay} if you’d rather talk to the bar.
       </p>
       <div className="mt-12 grid gap-8 md:grid-cols-2">
         {items.map((item) => (
@@ -51,17 +54,18 @@ export default function MenuPage() {
             </div>
             <div className="p-6">
               <h2 className="font-display text-3xl">{item.title}</h2>
+              <p className="mt-1 text-lg font-semibold text-amber">{item.price}</p>
               <p className="mt-2 text-paper/75">{item.copy}</p>
             </div>
           </article>
         ))}
       </div>
       <div className="mt-12 flex flex-col gap-3 sm:flex-row">
-        <a href={site.phoneHref} className="btn btn-primary">
-          Call to order
-        </a>
+        <Link href="/order" className="btn btn-primary">
+          Pay in chat
+        </Link>
         <Link href="/shop" className="btn btn-ghost">
-          Wings to-go & sauce
+          Shop sauce & wings
         </Link>
       </div>
     </section>

@@ -49,7 +49,7 @@ npm start
 - Do not need to be present to win
 - Steak Night: Thursday & Saturday
 
-Ticket and pickup forms **do not charge cards**. Chat orders write a kitchen ticket (COA 4300 food / 4510 Shriners tickets) and still settle at the bar or via Venmo.
+Online pay uses **demo pricing**. Chat, shop, and the fundraiser form send guests to checkout. Test card `4242 4242 4242 4242`. Kitchen does not start the order until `paid`.
 
 ## Chat + chart of accounts
 
@@ -66,11 +66,14 @@ Digital chat is a new order channel. Walk-in / phone stay on the old codes.
 Set these in `.env.local` (see `.env.example`):
 
 ```
-XAI_API_KEY=          # SpaceXAI / xAI, server-side only
-ORDER_PIN=rainbow     # kitchen board at /orders
+XAI_API_KEY=              # SpaceXAI / xAI, server-side only
+ORDER_PIN=rainbow         # kitchen board at /orders
+STRIPE_SECRET_KEY=        # optional; without it, demo card checkout is used
 ```
 
 Chat uses Grok (`grok-4.6`) via `https://api.x.ai/v1`. Without `XAI_API_KEY` the widget tells people to call the bar.
+
+Demo menu: 6-pc wings $12.99, 12-pc $21.99, steak night $22, cheeseburger $11.99, pastrami burger $14.99, cheese fries $8.99, sauce pouch $9.99, bottle $8.99, Shriners ticket $185.
 
 Kitchen: https://rainbow-saloon.vercel.app/orders
 

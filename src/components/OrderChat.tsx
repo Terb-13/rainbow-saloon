@@ -56,7 +56,7 @@ export function OrderChat() {
                 Order with the Saloon
               </h2>
               <p className="text-sm text-cream/85">
-                Wings, sauce, or Aug 29 tickets. We write it up.
+                Wings, sauce, or Aug 29 tickets. Pay online — demo prices.
               </p>
             </div>
           </header>
@@ -103,7 +103,8 @@ export function OrderChat() {
                         ? (part.output as {
                             ok?: boolean;
                             id?: string;
-                            knownTotal?: string;
+                            total?: string;
+                            payUrl?: string;
                             error?: string;
                           })
                         : undefined;
@@ -127,10 +128,15 @@ export function OrderChat() {
                         className="mt-2 rounded-lg border border-amber/40 bg-char p-3"
                       >
                         <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-amber">
-                          Order in
+                          Pay to send it to the kitchen
                         </p>
                         <p className="font-display text-xl">{output.id}</p>
-                        <p className="text-xs text-muted">{output.knownTotal}</p>
+                        <p className="text-sm">{output.total}</p>
+                        {output.payUrl && (
+                          <a href={output.payUrl} className="btn btn-amber mt-3 w-full">
+                            Pay {output.total}
+                          </a>
+                        )}
                       </div>
                     );
                   }

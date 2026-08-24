@@ -114,12 +114,10 @@ export default function KitchenPage() {
               ))}
             </ul>
             <p className="mt-2 text-sm text-muted">
-              {order.knownTotalCents == null
-                ? "Food total confirm at bar"
-                : `$${(order.knownTotalCents / 100).toFixed(0)}`}
+              ${(order.totalCents / 100).toFixed(2)} · {order.payment}
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
-              {(["working", "done", "cancelled"] as const).map((s) => (
+              {(["paid", "working", "done", "cancelled"] as const).map((s) => (
                 <button
                   key={s}
                   type="button"

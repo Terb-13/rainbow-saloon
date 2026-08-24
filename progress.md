@@ -30,3 +30,4 @@
 - **R2** — Lighter overlay, pour photo, HTML product copy. Still FAIL (type on food; name not on pack; desktop cards cropped).
 - **R3** — Split wings hero (no type on meat). Typeset paper label on pouch/bottle photos. **PASS** both.
 - **Chat / COA** — Added SpaceXAI order chat (Grok 4.6) plus new COA **4300** (digital food) and **4510** (digital Shriners tickets). Kitchen board at `/orders`.
+- **Online pay** — Demo prices on every SKU. Chat/shop/tickets go to `/pay/[id]` (test card 4242). Stripe optional.
