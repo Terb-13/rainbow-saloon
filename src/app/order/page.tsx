@@ -1,36 +1,28 @@
 import type { Metadata } from "next";
-import { catalog } from "@/lib/catalog";
-import { dollars } from "@/lib/money";
+import { OrderChat } from "@/components/OrderChat";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Chat Order | Wings, Sauce & Shriners Tickets",
+  title: "Order | Wings, Sauce & Shriners Tickets",
   description:
-    "Pay online for Rainbow Saloon extra-saucy wings, house sauce, or Aug 29 Shriners fundraiser tickets. Demo prices. COA 4300 and 4510.",
+    "Order Rainbow Saloon extra-saucy wings, house sauce, or Aug 29 Shriners tickets online. Demo prices. Call the bar only as a last resort.",
 };
 
 export default function OrderPage() {
   return (
-    <section className="mx-auto max-w-3xl px-4 py-16">
-      <p className="kicker">COA 4300 food · 4510 tickets</p>
-      <h1 className="display mt-3 text-5xl">Order and pay in the chat.</h1>
-      <p className="mt-4 max-w-xl text-lg text-paper/85">
-        Hit Chat (bottom right). We’ll write the ticket, you pay online, kitchen
-        fires it. Demo prices — not the live bar board.
+    <section className="mx-auto max-w-xl px-4 py-12">
+      <p className="kicker">First: order here · Last: call the bar</p>
+      <h1 className="display mt-3 text-5xl">Write it up.</h1>
+      <p className="mt-4 mb-8 text-lg text-paper/85">
+        Tap what you want, add a name and phone, place the ticket. Demo prices.
+        No card yet — kitchen still gets the order.
       </p>
-      <ul className="mt-8 divide-y divide-cream/10 rounded-2xl border border-cream/10 bg-wood px-5">
-        {catalog.map((item) => (
-          <li key={item.sku} className="flex justify-between gap-4 py-3 text-sm">
-            <span>
-              {item.name}
-              {item.steakNightOnly ? " (Thu/Sat)" : ""}
-            </span>
-            <span className="shrink-0 text-amber">{dollars(item.priceCents)}</span>
-          </li>
-        ))}
-      </ul>
-      <p className="mt-6 text-sm text-muted">
-        Test card 4242 4242 4242 4242. Prefer a human? Call {site.phoneDisplay}.
+      <OrderChat startOpen />
+      <p className="mt-6 text-center text-xs text-muted">
+        Last resort only:{" "}
+        <a href={site.phoneHref} className="underline">
+          {site.phoneDisplay}
+        </a>
       </p>
     </section>
   );

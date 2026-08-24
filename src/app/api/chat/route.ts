@@ -9,7 +9,6 @@ import {
 } from "ai";
 import { xai } from "@ai-sdk/xai";
 import { z } from "zod";
-import { checkoutUrl } from "@/lib/checkout";
 import { catalog, catalogForPrompt, isSteakNight } from "@/lib/catalog";
 import { dollars } from "@/lib/money";
 import { createOrder } from "@/lib/orders";
@@ -29,7 +28,7 @@ export async function POST(req: Request) {
     return Response.json(
       {
         error:
-          "Chat is not live yet — set XAI_API_KEY on the server. Meanwhile call the bar.",
+          "Use the order ticket in the window — tap items, then Place order. No need to call.",
       },
       { status: 503 },
     );
@@ -39,35 +38,35 @@ export async function POST(req: Request) {
 
   const result = streamText({
     model: xai.responses("grok-4.6"),
-    system: `You are the Rainbow Saloon order desk in Roy, Utah — a hometown bartender taking paid to-go food and Shriners fundraiser tickets over chat.
+    system: `You take Rainbow Saloon orders in this chat. First course of action is ALWAYS complete the order here. Calling the bar is the LAST resort, and only if the guest explicitly asks to talk to a person.
 
-Voice: warm, short, local. Never corporate. Quote demo menu prices exactly as listed. Say they are demo prices.
+Never say "call the bar", "give us a ring", or read the phone number unless they ask for a human.
 
-Facts you must not change:
+Voice: warm, short, local. Quote demo prices exactly.
+
+Facts:
 - Address: ${site.address.full}
-- Phone: ${site.phoneDisplay}
 - Hours: ${site.hours}
-- Steak night is Thursday & Saturday only. Steak night today (Utah time): ${isSteakNight() ? "YES" : "NO"}.
-- Fundraiser: ${fundraiser.title}, ${fundraiser.dateLabel}. ${fundraiser.ticketCap} tickets, ${fundraiser.priceLabel}. Includes 2 entries, 2 dinners, 2 bands, 100+ prizes. Do not need to be present to win. All proceeds to Shriners.
-- Digital order codes: COA 4300 (chat food/sauce) and COA 4510 (chat tickets).
-- Payment is online. After placeOrder, the guest taps Pay now. Demo card 4242 4242 4242 4242. Do not invent other prices.
+- Steak night today (Utah): ${isSteakNight() ? "YES" : "NO"} (Thu/Sat only).
+- Fundraiser: ${fundraiser.title}, ${fundraiser.dateLabel}, ${fundraiser.ticketCap} tickets at ${fundraiser.priceLabel}. 2 entries, 2 dinners, 2 bands, 100+ prizes. Need not be present to win. All proceeds to Shriners.
+- COA 4300 food/sauce, 4510 tickets.
 
-Catalog (demo):
+Catalog:
 ${catalogForPrompt()}
 
-How to take an order:
-1. Ask what they want. Suggest wings, sauce pouches, or Aug 29 tickets if they're vague. Quote the demo price.
-2. Collect name and phone for every order. For tickets also collect mailing address. For food ask pickup window if they have one.
-3. Repeat the cart and the dollar total, then call placeOrder.
-4. After placeOrder succeeds, give the order id, the total, and tell them to tap Pay now in the chat (payUrl). Kitchen does not start the food until it is paid.
-5. If they only want hours, directions, or the story, answer — don't force an order.
+Order flow:
+1. Build the cart from the catalog. Quote prices.
+2. Get name + phone. Tickets also need mailing address. Food: optional pickup window.
+3. Repeat cart + total, then placeOrder. There is NO payment step. The kitchen gets the ticket as soon as you place it.
+4. After placeOrder, give the order id and pickup address. Do not send them to a pay page. Do not tell them to call.
+5. Phone ${site.phoneDisplay} only if they ask to speak to someone.
 
-Never invent SKUs. Never promise items not in the catalog.`,
+Never invent SKUs.`,
     messages: await convertToModelMessages(messages),
     stopWhen: isStepCount(6),
     tools: {
       listMenu: tool({
-        description: "Show what can be ordered in chat right now.",
+        description: "Show the orderable demo menu.",
         inputSchema: z.object({}),
         execute: async () => ({
           steakNightToday: isSteakNight(),
@@ -83,41 +82,27 @@ Never invent SKUs. Never promise items not in the catalog.`,
         }),
       }),
       placeOrder: tool({
-        description:
-          "Submit a food, sauce, and/or fundraiser ticket order on COA 4300/4510 after the guest confirms.",
+        description: "Place the order for the kitchen. No payment.",
         inputSchema: z.object({
-          name: z.string().min(2).describe("Guest full name"),
-          phone: z.string().min(7).describe("Callback phone"),
-          address: z
-            .string()
-            .optional()
-            .describe("Required for tickets: mailing address"),
-          pickupWindow: z
-            .string()
-            .optional()
-            .describe("When they'll pick up food, if known"),
+          name: z.string().min(2),
+          phone: z.string().min(7),
+          address: z.string().optional(),
+          pickupWindow: z.string().optional(),
           notes: z.string().optional(),
           items: z.array(itemSchema).min(1),
         }),
         execute: async (input) => {
           const tickets = input.items.filter((i) => i.sku === "ticket-185");
           if (tickets.length > 0 && !input.address) {
-            return {
-              ok: false,
-              error: "Address is required for fundraiser tickets.",
-            };
+            return { ok: false, error: "Address is required for tickets." };
           }
           try {
-            const origin = new URL(req.url).origin;
             const order = await createOrder({ ...input, channel: "chat" });
-            const payUrl = await checkoutUrl(order, origin);
             return {
               ok: true,
               id: order.id,
-              ticketCount: order.ticketCount,
-              foodCount: order.foodCount,
               total: dollars(order.totalCents),
-              payUrl,
+              pickup: site.address.full,
               lines: order.lines,
             };
           } catch (err) {

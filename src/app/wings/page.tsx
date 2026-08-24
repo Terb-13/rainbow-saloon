@@ -29,9 +29,9 @@ export default function WingsPage() {
               className="object-cover object-center"
             />
             <div className="absolute inset-x-0 bottom-0 p-4 lg:hidden">
-              <a href={site.phoneHref} className="btn btn-primary w-full">
-                Call for to-go wings
-              </a>
+              <Link href="/order" className="btn btn-primary w-full">
+                Order wings
+              </Link>
             </div>
           </div>
           <div className="order-2 flex flex-col justify-center px-4 py-10 sm:px-10">
@@ -40,12 +40,12 @@ export default function WingsPage() {
               The wings people drive for.
             </h1>
             <p className="mt-4 max-w-md text-lg text-paper/85">
-              Extra saucy on purpose. BBQ-tomatoey sweet-heat. Call for to-go —
-              we toss them when you’re close.
+              Extra saucy on purpose. BBQ-tomatoey sweet-heat. Order here — we
+              toss them when you’re close.
             </p>
-            <a href={site.phoneHref} className="btn btn-primary mt-6 w-fit">
-              Call for to-go wings
-            </a>
+            <Link href="/order" className="btn btn-primary mt-6 w-fit">
+              Order wings — $12.99 / $21.99
+            </Link>
           </div>
         </div>
       </section>
@@ -63,9 +63,9 @@ export default function WingsPage() {
             Huge, crispy, juicy, and tossed like we mean it. That’s what the
             neighborhood says. That’s what we plate.
           </p>
-          <a href={site.phoneHref} className="btn btn-primary mt-8">
-            Call for to-go wings
-          </a>
+          <Link href="/order" className="btn btn-primary mt-8">
+            Order to-go
+          </Link>
         </div>
         <div className="relative aspect-[4/3] overflow-hidden rounded-3xl">
           <Image
@@ -81,7 +81,7 @@ export default function WingsPage() {
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-16 md:grid-cols-3">
           {[
             ["Dine-in", "Bar, patio, TVs. Eat them dripping at the source."],
-            ["To-go pickup", "Call ahead. We toss them when you’re close."],
+            ["To-go pickup", "Order here first. We toss them when you’re close."],
             ["Sauce to-go", "Stand-up flex pouches with a spout, or bottles."],
           ].map(([t, d]) => (
             <article key={t} className="rounded-2xl bg-plank p-6">

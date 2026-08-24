@@ -11,17 +11,11 @@ export type OrderLine = {
   priceCents: number;
 };
 
-export type OrderStatus =
-  | "awaiting_payment"
-  | "paid"
-  | "working"
-  | "done"
-  | "cancelled";
+export type OrderStatus = "placed" | "working" | "done" | "cancelled";
 
 export type Order = {
   id: string;
   createdAt: string;
-  paidAt?: string;
   channel: "chat" | "web";
   status: OrderStatus;
   customer: {
@@ -35,7 +29,6 @@ export type Order = {
   ticketCount: number;
   foodCount: number;
   totalCents: number;
-  payment: "unpaid" | "demo" | "stripe";
 };
 
 type G = typeof globalThis & { __rsOrders?: Order[] };
@@ -118,7 +111,7 @@ export async function createOrder(input: {
     id: nextId(orders, ticketCount > 0),
     createdAt: new Date().toISOString(),
     channel: input.channel ?? "chat",
-    status: "awaiting_payment",
+    status: "placed",
     customer: {
       name: input.name.trim(),
       phone: input.phone.trim(),
@@ -130,7 +123,6 @@ export async function createOrder(input: {
     ticketCount,
     foodCount,
     totalCents,
-    payment: "unpaid",
   };
   orders.push(order);
   await persist(orders);
@@ -142,17 +134,6 @@ export async function setOrderStatus(id: string, status: OrderStatus) {
   const order = orders.find((o) => o.id === id);
   if (!order) return null;
   order.status = status;
-  await persist(orders);
-  return order;
-}
-
-export async function markPaid(id: string, method: "demo" | "stripe") {
-  const orders = await load();
-  const order = orders.find((o) => o.id === id);
-  if (!order) return null;
-  order.status = "paid";
-  order.payment = method;
-  order.paidAt = new Date().toISOString();
   await persist(orders);
   return order;
 }

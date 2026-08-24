@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Logo } from "./Logo";
-import { nav, site } from "@/lib/site";
+import { nav } from "@/lib/site";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -22,9 +22,9 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
-          <a href={site.phoneHref} className="btn btn-amber py-3">
-            Call {site.phoneDisplay}
-          </a>
+          <Link href="/order" className="btn btn-amber py-3">
+            Order
+          </Link>
         </nav>
         <button
           type="button"
@@ -54,9 +54,9 @@ export function SiteHeader() {
                 {item.label}
               </Link>
             ))}
-            <a href={site.phoneHref} className="btn btn-amber mt-2 w-full">
-              Call {site.phoneDisplay}
-            </a>
+            <Link href="/order" onClick={() => setOpen(false)} className="btn btn-amber mt-2 w-full">
+              Order
+            </Link>
           </nav>
         </div>
       )}

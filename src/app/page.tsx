@@ -17,8 +17,8 @@ export default function Home() {
               className="object-cover object-center"
             />
             <div className="absolute inset-x-0 bottom-0 flex justify-center p-4 lg:hidden">
-              <Link href="/fundraiser" className="btn btn-primary w-full max-w-sm shadow-lg">
-                Get Aug 29 tickets
+              <Link href="/order" className="btn btn-primary w-full max-w-sm shadow-lg">
+                Order now
               </Link>
             </div>
           </div>
@@ -33,11 +33,11 @@ export default function Home() {
               steak night. This Saturday: the 20th Annual Shriners fundraiser.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="/fundraiser" className="btn btn-primary px-8 py-4 text-sm">
-                Get Aug 29 tickets
+              <Link href="/order" className="btn btn-primary px-8 py-4 text-sm">
+                Order wings & tickets
               </Link>
-              <Link href="/wings" className="btn btn-ghost px-8 py-4 text-sm">
-                See the wings
+              <Link href="/fundraiser" className="btn btn-ghost px-8 py-4 text-sm">
+                Aug 29 fundraiser
               </Link>
             </div>
             <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-xs font-semibold uppercase tracking-wider text-muted">

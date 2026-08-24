@@ -31,3 +31,4 @@
 - **R3** — Split wings hero (no type on meat). Typeset paper label on pouch/bottle photos. **PASS** both.
 - **Chat / COA** — Added SpaceXAI order chat (Grok 4.6) plus new COA **4300** (digital food) and **4510** (digital Shriners tickets). Kitchen board at `/orders`.
 - **Online pay** — Demo prices on every SKU. Chat/shop/tickets go to `/pay/[id]` (test card 4242). Stripe optional.
+- **COA order-first** — Checkout is items → details → review → place. Call the bar is last resort only. No payment required to complete the ticket.

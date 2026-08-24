@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { catalog } from "@/lib/catalog";
 import { dollars } from "@/lib/money";
 
@@ -12,6 +13,7 @@ const options = [
 ] as const;
 
 export function PickupForm() {
+  const router = useRouter();
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
 
@@ -35,16 +37,18 @@ export function PickupForm() {
     const data = await res.json();
     setBusy(false);
     if (!res.ok) {
-      setError(data.error ?? "Could not start checkout");
+      setError(data.error ?? "Could not place order");
       return;
     }
-    window.location.href = data.url;
+    router.push(`/order/thanks?id=${encodeURIComponent(data.id)}`);
   }
 
   return (
     <form className="rounded-3xl border border-cream/10 bg-wood p-8" onSubmit={onSubmit}>
-      <h2 className="font-display text-3xl">Pay & pickup</h2>
-      <p className="mt-2 text-sm text-amber">Demo prices. Pay online, then grab it at the bar.</p>
+      <h2 className="font-display text-3xl">Write it up</h2>
+      <p className="mt-2 text-sm text-amber">
+        Demo prices. No card yet — this sends the ticket to the kitchen.
+      </p>
       <div className="mt-6 grid gap-4">
         <input
           required
@@ -91,7 +95,7 @@ export function PickupForm() {
       </div>
       {error && <p className="mt-3 text-sm text-amber">{error}</p>}
       <button type="submit" className="btn btn-amber mt-6 w-full" disabled={busy}>
-        {busy ? "Opening checkout…" : "Pay now"}
+        {busy ? "Sending…" : "Place order"}
       </button>
     </form>
   );

@@ -1,4 +1,3 @@
-import { checkoutUrl } from "@/lib/checkout";
 import { createOrder } from "@/lib/orders";
 
 export async function POST(req: Request) {
@@ -26,11 +25,15 @@ export async function POST(req: Request) {
       items: body.items,
       channel: "web",
     });
-    const url = await checkoutUrl(order, new URL(req.url).origin);
-    return Response.json({ id: order.id, url, totalCents: order.totalCents });
+    return Response.json({
+      id: order.id,
+      totalCents: order.totalCents,
+      lines: order.lines,
+      status: order.status,
+    });
   } catch (err) {
     return Response.json(
-      { error: err instanceof Error ? err.message : "Checkout failed" },
+      { error: err instanceof Error ? err.message : "Could not place order" },
       { status: 400 },
     );
   }

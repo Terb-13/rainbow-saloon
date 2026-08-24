@@ -62,7 +62,7 @@ export default function MenuPage() {
       </div>
       <div className="mt-12 flex flex-col gap-3 sm:flex-row">
         <Link href="/order" className="btn btn-primary">
-          Pay in chat
+          Order now
         </Link>
         <Link href="/shop" className="btn btn-ghost">
           Shop sauce & wings

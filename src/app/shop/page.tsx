@@ -53,7 +53,7 @@ export default function ShopPage() {
               Cooler-friendly. Demo price $9.99.
             </p>
             <a href="#pickup" className="btn btn-primary mt-5">
-              Buy pouch — $9.99
+              Order pouch — $9.99
             </a>
           </div>
         </article>
@@ -88,7 +88,7 @@ export default function ShopPage() {
               $8.99.
             </p>
             <a href="#pickup" className="btn btn-ghost mt-5">
-              Buy bottle — $8.99
+              Order bottle — $8.99
             </a>
           </div>
         </article>
@@ -109,8 +109,8 @@ export default function ShopPage() {
             6-piece $12.99 · 12-piece $21.99 (demo). Pay online, we toss when
             you’re close. Thursday & Saturday steak night $22.
           </p>
-          <a href="#pickup" className="btn btn-primary mt-6">
-            Pay for wings
+          <a href="/order" className="btn btn-primary mt-6">
+            Order wings
           </a>
         </div>
       </div>

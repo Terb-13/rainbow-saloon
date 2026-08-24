@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { fundraiser } from "@/lib/site";
 
 export function TicketForm() {
+  const router = useRouter();
   const [qty, setQty] = useState(1);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -26,10 +28,10 @@ export function TicketForm() {
     const data = await res.json();
     setBusy(false);
     if (!res.ok) {
-      setError(data.error ?? "Could not start checkout");
+      setError(data.error ?? "Could not place order");
       return;
     }
-    window.location.href = data.url;
+    router.push(`/order/thanks?id=${encodeURIComponent(data.id)}`);
   }
 
   return (
@@ -42,8 +44,8 @@ export function TicketForm() {
         {fundraiser.priceLabel} · 2 people, 2 dinners, 2 bands
       </h3>
       <p className="mt-2 text-sm text-muted">
-        Limited to {fundraiser.ticketCap} tickets. Pay online (demo). You do not
-        need to be present to win.
+        Limited to {fundraiser.ticketCap}. Write it up here first — no card yet.
+        You do not need to be present to win.
       </p>
       <div className="mt-5 grid gap-4">
         <label className="grid gap-1 text-sm">
@@ -97,12 +99,8 @@ export function TicketForm() {
       </div>
       {error && <p className="mt-3 text-sm text-amber">{error}</p>}
       <button type="submit" className="btn btn-primary mt-6 w-full" disabled={busy}>
-        {busy ? "Opening checkout…" : `Pay ${fundraiser.priceLabel} × ${qty}`}
+        {busy ? "Sending…" : "Place ticket order"}
       </button>
-      <p className="mt-3 text-xs text-muted">
-        Demo checkout. Test card 4242 4242 4242 4242. Kitchen sees it after
-        payment.
-      </p>
     </form>
   );
 }

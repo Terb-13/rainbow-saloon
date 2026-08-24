@@ -116,24 +116,24 @@ export default function FundraiserPage() {
             {[
               {
                 n: "01",
-                t: "Call",
-                d: `Call ${site.phoneDisplay}. Tell us your name and how many tickets. We’ll walk you through it.`,
-                href: site.phoneHref,
-                cta: "Call the bar",
+                t: "Order here",
+                d: "First: write it up online. Name, phone, address, pay-later demo ticket. Kitchen sees it immediately.",
+                href: "/order",
+                cta: "Start the ticket",
               },
               {
                 n: "02",
-                t: "Venmo",
-                d: fundraiser.venmoNote,
-                href: site.phoneHref,
-                cta: "Confirm Venmo by phone",
-              },
-              {
-                n: "03",
                 t: "Walk in",
                 d: `Stop by ${site.address.full}. Open ${site.hours}. Grab a ticket, grab wings.`,
                 href: site.mapsUrl,
                 cta: "Get directions",
+              },
+              {
+                n: "03",
+                t: "Call last",
+                d: `Only if the order desk can’t do it. ${site.phoneDisplay}.`,
+                href: site.phoneHref,
+                cta: "Call the bar",
               },
             ].map((step) => (
               <article
